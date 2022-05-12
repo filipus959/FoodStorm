@@ -1,12 +1,11 @@
 package com.example.foodstorm
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -28,17 +27,26 @@ import com.example.foodstorm.data.remote.responses.Result
 fun MainScreen(navController: NavController,viewModel : MainScreenViewModel = hiltViewModel())
 {
     val foodList : MutableList<Result>? by viewModel.foodList.observeAsState()
+    val isLoading by remember { viewModel.isLoading }
 Column(modifier = Modifier.fillMaxSize())
 {
-    Row(modifier = Modifier.fillMaxWidth())
+    Spacer(modifier = Modifier
+        .height(120.dp))
+    Row(modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.Center,
+    verticalAlignment = Alignment.CenterVertically)
     {
         TextField(value = viewModel.text, onValueChange = {viewModel.text = it} )
-        Button(onClick = {
+        OutlinedButton(onClick = {
             viewModel.getRecipesList()
         }) {
-
+            Text("Search")
         }
     }
+
+//    if(isLoading) {
+//        CircularProgressIndicator(color = MaterialTheme.colors.primary)
+//    }
 
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),
@@ -47,30 +55,39 @@ Column(modifier = Modifier.fillMaxSize())
     {
         foodList?.let {
             items(it.count()) { a ->
-                Column()
-                {
-                    AsyncImage(
-                        model = foodList?.get(a)?.image,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(120.dp)
-                            .align(Alignment.CenterHorizontally)
-                    )
 
-                    Text(foodList?.get(a)?.title +"fod")
-                    //  Text(recipesList[a].title +"recipe")
-
-
-                }
+               RecipeEntry(entry = foodList!![a], navController = navController)
             }
         }
+    }
+ }
+
+}
+
+
+@Composable
+fun RecipeEntry(
+    entry : Result,
+    navController: NavController
+) {
+    Column()
+    {
+        AsyncImage(
+            model = entry.image,
+            contentDescription = "",
+            modifier = Modifier
+                .size(120.dp)
+                .align(Alignment.CenterHorizontally)
+                .clickable {
+                    navController.navigate("detailedScreen/${entry.id}")
+                }
+        )
+        Text(entry.title)
     }
 }
 
 
 
-
-}
 
 @Preview(showBackground = true)
 @Composable

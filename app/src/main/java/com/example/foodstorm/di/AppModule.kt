@@ -18,6 +18,7 @@ import javax.inject.Singleton
 object AppModule {
     private const val BASE_URL = "https://api.spoonacular.com/"
     private const val API_KEY = "f7f060578b994261b44edcc77a9bf358"
+    private const val KEY_NAME = "apiKey"
 
     @Singleton
     @Provides
@@ -35,7 +36,7 @@ object AppModule {
         httpClient.addInterceptor(Interceptor { chain: Interceptor.Chain ->
             var original = chain.request()
             val url = original.url.newBuilder()
-                .addQueryParameter("apiKey", API_KEY).build()
+                .addQueryParameter(KEY_NAME, API_KEY).build()
             original = original.newBuilder().url(url).build()
             chain.proceed(original)
         })

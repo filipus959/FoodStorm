@@ -1,6 +1,5 @@
 package com.example.foodstorm
 
-import android.app.appsearch.SearchResult
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,8 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.foodstorm.data.remote.responses.Result
-
-
+import kotlinx.coroutines.Dispatchers
 
 
 @HiltViewModel
@@ -24,16 +22,18 @@ class MainScreenViewModel @Inject constructor(
     private val _foodList : MutableLiveData<MutableList<Result>> = MutableLiveData(mutableListOf())
     val foodList : MutableLiveData<MutableList<Result>> = _foodList
     var text by mutableStateOf("")
+    var isLoading = mutableStateOf(true)
 
-    init {
-       // getRecipesList()
-    }
+//    init {
+//        getRecipesList()
+//    }
 
     fun getRecipesList() {
+        isLoading.value = true
         viewModelScope.launch {
-            var result = repository.getFoodList(text).data?.results as MutableList<Result>
-           _foodList.value = result
+            _foodList.postValue(repository.getFoodList(text).data?.results as MutableList<Result>)
         }
+        isLoading.value = false
     }
 
 

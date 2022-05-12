@@ -9,10 +9,13 @@ import retrofit2.http.Query
 
 
 interface FoodApi {
-    @GET("/recipes/complexSearch?")
+    @GET("/recipes/complexSearch?&number=100")
     suspend fun getFoodList(@Query("query")query: String?): SearchResults
     @GET("recipes/{id}/information?includeNutrition=false&")
     suspend fun getRecipeDetail(@Path("id") id: Int): RecipeDetails
+    @GET("/recipes/random?number=10")
+    suspend fun getRandomRecipes(): RecipeDetails
+
 
 
 }
