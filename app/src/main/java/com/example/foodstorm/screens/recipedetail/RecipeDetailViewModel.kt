@@ -1,13 +1,10 @@
-package com.example.foodstorm.recipedetail
+package com.example.foodstorm.screens.recipedetail
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.foodstorm.data.remote.responses.RecipeDetails
-import com.example.foodstorm.data.remote.responses.Result
 import com.example.foodstorm.repository.FoodRepository
 import com.example.foodstorm.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,6 +1,7 @@
 package com.example.foodstorm
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
@@ -12,6 +13,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -20,6 +22,7 @@ import com.example.foodstorm.ui.theme.FoodStormTheme
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.foodstorm.data.remote.responses.Result
+import com.example.foodstorm.screens.mainscreen.MainScreenViewModel
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -27,8 +30,9 @@ import com.example.foodstorm.data.remote.responses.Result
 fun MainScreen(navController: NavController,viewModel : MainScreenViewModel = hiltViewModel())
 {
     val foodList : MutableList<Result>? by viewModel.foodList.observeAsState()
-    val isLoading by remember { viewModel.isLoading }
-Column(modifier = Modifier.fillMaxSize())
+Column(modifier = Modifier
+    .fillMaxSize()
+    .background(color = Color.Gray))
 {
     Spacer(modifier = Modifier
         .height(120.dp))
@@ -36,7 +40,8 @@ Column(modifier = Modifier.fillMaxSize())
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically)
     {
-        TextField(value = viewModel.text, onValueChange = {viewModel.text = it} )
+        TextField(value = viewModel.text, onValueChange = {viewModel.text = it}, colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color.White),label = { Text("Type Recipe you want to find")} )
         OutlinedButton(onClick = {
             viewModel.getRecipesList()
         }) {
@@ -44,9 +49,6 @@ Column(modifier = Modifier.fillMaxSize())
         }
     }
 
-//    if(isLoading) {
-//        CircularProgressIndicator(color = MaterialTheme.colors.primary)
-//    }
 
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),

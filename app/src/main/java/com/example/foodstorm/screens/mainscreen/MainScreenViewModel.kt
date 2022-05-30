@@ -1,4 +1,4 @@
-package com.example.foodstorm
+package com.example.foodstorm.screens.mainscreen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,7 +11,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.foodstorm.data.remote.responses.Result
-import kotlinx.coroutines.Dispatchers
 
 
 @HiltViewModel
