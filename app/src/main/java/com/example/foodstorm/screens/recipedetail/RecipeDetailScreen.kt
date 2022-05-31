@@ -11,6 +11,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -64,7 +65,9 @@ fun DetailedEntry(
     LazyColumn(modifier = Modifier
         .fillMaxSize(),
     horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center)
+    verticalArrangement = Arrangement.Center,
+        contentPadding = PaddingValues(vertical = 10.dp)
+    )
     {
         item{
             AsyncImage(
@@ -73,10 +76,16 @@ fun DetailedEntry(
                 modifier = Modifier
                     .size(420.dp)
             )
-            Text(entry.title)
-            Text("Ready in :"+entry.readyInMinutes.toString()+" Min")
+            Text(entry.title, fontSize = 32.sp)
+            Text("Ready in :"+entry.readyInMinutes.toString()+" Min", fontSize = 24.sp)
+            Spacer(modifier = Modifier.height(10.dp))
             Html(entry.summary)
-            Html("\nINSTRUCTION: \n"+entry.instructions)
+            if(entry.instructions!=null) {
+                Html("\nINSTRUCTION: \n"+entry.instructions)
+            } else {
+                Text("Instruction not found")
+            }
+
         }
 
     }
@@ -88,6 +97,7 @@ fun Html(text: String) {
     AndroidView(factory = { context ->
         TextView(context).apply {
             this.setPadding(20,0,20,0)
+            this.textSize = 18F
             setText(HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY))
         }
     })

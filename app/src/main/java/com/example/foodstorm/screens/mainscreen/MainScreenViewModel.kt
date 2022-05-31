@@ -23,9 +23,9 @@ class MainScreenViewModel @Inject constructor(
     var text by mutableStateOf("")
     var isLoading = mutableStateOf(true)
 
-//    init {
-//        getRecipesList()
-//    }
+    init {
+        getRecipesList()
+    }
 
     fun getRecipesList() {
         isLoading.value = true
