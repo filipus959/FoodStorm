@@ -48,7 +48,7 @@ fun RecipeDetailStateWrapper(
         }
         is Resource.Loading -> {
             CircularProgressIndicator(
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colors.primary,modifier = Modifier.fillMaxSize()
             )
         }
     }
@@ -76,7 +76,7 @@ fun DetailedEntry(
             Text(entry.title)
             Text("Ready in :"+entry.readyInMinutes.toString()+" Min")
             Html(entry.summary)
-            Html(entry.instructions)
+            Html("\nINSTRUCTION: \n"+entry.instructions)
         }
 
     }
@@ -87,6 +87,7 @@ fun DetailedEntry(
 fun Html(text: String) {
     AndroidView(factory = { context ->
         TextView(context).apply {
+            this.setPadding(20,0,20,0)
             setText(HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY))
         }
     })

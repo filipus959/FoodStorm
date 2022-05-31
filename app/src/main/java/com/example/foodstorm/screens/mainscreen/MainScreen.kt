@@ -14,8 +14,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.foodstorm.ui.theme.FoodStormTheme
@@ -30,20 +33,27 @@ import com.example.foodstorm.screens.mainscreen.MainScreenViewModel
 fun MainScreen(navController: NavController,viewModel : MainScreenViewModel = hiltViewModel())
 {
     val foodList : MutableList<Result>? by viewModel.foodList.observeAsState()
-Column(modifier = Modifier
+    val focusManager = LocalFocusManager.current
+
+    Column(modifier = Modifier
     .fillMaxSize()
-    .background(color = Color.Gray))
+    .background(color = colorResource(id = R.color.gray)))
 {
     Spacer(modifier = Modifier
-        .height(120.dp))
+        .height(60.dp))
+    Text("    FoodStorm - Recipe finder",color = Color.White, fontSize = 30.sp)
+    Spacer(modifier = Modifier
+        .height(60.dp))
     Row(modifier = Modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically)
     {
-        TextField(value = viewModel.text, onValueChange = {viewModel.text = it}, colors = TextFieldDefaults.textFieldColors(
+        TextField(value = viewModel.text,onValueChange = {viewModel.text = it}, colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.White),label = { Text("Type Recipe you want to find")} )
+        Spacer(modifier = Modifier.width(10.dp))
         OutlinedButton(onClick = {
             viewModel.getRecipesList()
+            focusManager.clearFocus()
         }) {
             Text("Search")
         }
@@ -72,7 +82,8 @@ fun RecipeEntry(
     entry : Result,
     navController: NavController
 ) {
-    Column()
+    Column(horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center)
     {
         AsyncImage(
             model = entry.image,
@@ -84,7 +95,7 @@ fun RecipeEntry(
                     navController.navigate("detailedScreen/${entry.id}")
                 }
         )
-        Text(entry.title)
+        Text(entry.title,color = Color.White)
     }
 }
 

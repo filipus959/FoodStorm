@@ -2,6 +2,9 @@ package com.example.foodstorm.di
 
 import com.example.foodstorm.data.remote.FoodApi
 import com.example.foodstorm.repository.FoodRepository
+import com.example.foodstorm.util.Constants.API_KEY
+import com.example.foodstorm.util.Constants.BASE_URL
+import com.example.foodstorm.util.Constants.KEY_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,9 +19,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    private const val BASE_URL = "https://api.spoonacular.com/"
-    private const val API_KEY = "f7f060578b994261b44edcc77a9bf358"
-    private const val KEY_NAME = "apiKey"
+
 
     @Singleton
     @Provides
