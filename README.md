@@ -4,7 +4,7 @@ Sample jetpack compose project to find food recipes using free API
 
 ## API
 - [Spoonacular](https://spoonacular.com/food-api)
-- 
+
 ## Tech stack
 - 100% [Kotlin](https://kotlinlang.org/) based + [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) 
 - [Dagger Hilt](https://dagger.dev/hilt) 
